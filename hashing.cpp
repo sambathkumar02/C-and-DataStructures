@@ -7,52 +7,30 @@ struct node
 	int data;
 	struct node *next;
 };
-struct node *start[size];
+struct node *start[size]={NULL};
 
 	
 
-int table[size];int hash,i;
+int table[size]={0};int hash,i;
 
 
-void linear_probing(int rem,int elem)
+void linear_probing(int hash,int elem)
 {
-	int temp,flag=0;
-	temp=rem;
-	while(flag==1)
+	int	flag=0;
+	while(flag!=1)
 	{
-		if(rem==size-1)
+		if(hash==size-1)
+			hash=-1;
+		hash++;
+	    if(table[hash]==0)
 		{
-			for(i=0;i<=temp;i++)
-			{
-				if(table[i]==0)
-				{
-					table[i]=elem;
-					flag==1;
-				}
-				else
-				{
-					continue;
-				}
-			}
+				table[hash]=elem;
+				flag=1;
 		}
-		else
-		{
-			while(rem!=size-1 && flag==0)
-			{
-				if(table[rem]==0)
-				{
-				
-					table[rem]=elem;
-					flag=1;
-				}
-					
-				else
-				{
-					rem++;
-				}
-			}
-		}
+		
 	}
+		
+	
 			
 }
 struct node *separate_chaining(struct node *ptr,int num)
@@ -74,7 +52,6 @@ struct node *separate_chaining(struct node *ptr,int num)
 		
 	}
 	return ptr;
-	
 }
 	 
 void display()
@@ -96,7 +73,21 @@ void display()
 }
 
 
-void hashing(int keyValue)
+void hashing1(int keyValue)
+{
+	
+	hash=(keyValue)%(size);
+	if(table[hash]==0)
+	{
+		table[hash]=keyValue;
+		return;
+	}
+	else
+		linear_probing(hash,keyValue);
+		
+	
+}
+void hashing2(int keyValue)
 {
 	
 	hash=(keyValue)%(size);
@@ -113,13 +104,7 @@ void hashing(int keyValue)
 
 int main()
 {
-	for(i=0;i<size;i++)
-	{
-		table[i]=0;
-		start[i]=NULL;
-	}
-	
-	int numbers[10],n;
+    int numbers[10],n,opt;
 	printf("\n Enter the number of eleemnts (less than or equal to %d ):",size);
 	scanf("%d",&n);
 	if(n>size)
@@ -132,13 +117,22 @@ int main()
 		printf("\n Enter the elements:");
 		for(i=0;i<n;i++)
 			scanf("\t %d",&numbers[i]);
-		for(i=0;i<n;i++)
-			hashing(numbers[i]);
-		display();
+		printf("1.Linear Probing\n2.Seperate Chaining\nEnter your option:");
+		scanf("%d",&opt);
+		switch(opt)
+		{
+		 case 1:
+			for(i=0;i<n;i++)
+			    hashing1(numbers[i]);
+			display();break;
+		case 2:
+		    for(i=0;i<n;i++)
+		     hashing2(numbers[i]);
+	    	display();break;
+		default:
+		    printf("\nPlease enter crt option");
+	    }
+		
 	}
 }
-	
-	
-	
-
 
