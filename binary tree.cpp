@@ -29,23 +29,42 @@ struct node *insert(struct node *root)
 	else
 	{
 		temp=root;
+		int flag=0;
+		while(flag!=1)
+		{
+		fflush(stdin);
 		printf("\n Enter 1.left or 2.right:");
 		scanf("%d",&opt);
 		if(opt==1)
 		{
-			while(temp->left!=NULL)
+		
+			if(temp->left==NULL)
+			{
+				temp->left=new_node;
 				temp=temp->left;
-			temp->left=new_node;
+				flag=1;
+			}
+			else
+				flag=0;
+			printf("\n %",root->left);
 			
 		}
 		else if(opt==2)
 		{
-			while(temp->right!=NULL)
+			
+			
+			if(temp->right==NULL)
+			{
+				temp->right=new_node;
 				temp=temp->right;
-			temp->right=new_node;
+				flag=1;
+			}
+			else
+				flag=0;
 		}
 		else
 			printf("\n invalid option...");
+		}
 	}
 	n--;
 	}
@@ -54,6 +73,17 @@ struct node *insert(struct node *root)
 	
 	
 }
+
+struct node *del(struct node *root)
+{
+	int key;
+	printf("Enter the value of node to be searched:");
+	scanf("%d",&key);
+	struct node *ptr;
+	ptr=root;
+}
+		
+		
 
 void inorder(struct node *pos)
 {
@@ -77,5 +107,4 @@ int main()
 	root=insert(root);
 	display(root);
 }
-	
 
